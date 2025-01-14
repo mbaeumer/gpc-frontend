@@ -15,16 +15,20 @@
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Location</th>
-        <th>Description</th>
+        <th>Address</th>
+        <th>Longitude</th>
+        <th>Latitude</th>
+        <th>API code</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="(result, index) in results" :key="result.id">
         <td>{{ index + 1 }}</td>
         <td>{{ result.name }}</td>
-        <td>{{ result.location }}</td>
-        <td>{{ result.description }}</td>
+        <td>{{ result.address }}</td>
+        <td>{{ result.longitude }}</td>
+        <td>{{ result.latitude }}</td>
+        <td>{{ result.googleApiCode }}</td>
       </tr>
       </tbody>
     </table>
@@ -48,7 +52,7 @@ const performSearch = async () => {
 
   try {
     const { $axios } = useNuxtApp();
-    const response = await $axios.get(`/places/textsearch`, {
+    const response = await $axios.get(`http://localhost:8080/hotspots/search`, {
       params: { query: searchQuery.value },
     });
     results.value = response.data; // Adjust based on the response structure
