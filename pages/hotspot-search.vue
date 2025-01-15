@@ -29,6 +29,9 @@
         <td>{{ result.longitude }}</td>
         <td>{{ result.latitude }}</td>
         <td>{{ result.googleApiCode }}</td>
+        <td>
+          <button @click="submitHotspot(result)">Submit</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -39,6 +42,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import {useNuxtApp} from "#app";
 
 const searchQuery = ref("");
 const results = ref([]);
@@ -62,6 +66,26 @@ const performSearch = async () => {
     alert("An error occurred while searching. Please try again.");
     results.value = [];
     searchPerformed.value = true;
+  }
+};
+
+const createHotspotRequestBody = (hotspot) => ({
+  name: hotspot.name,
+  address: hotspot.address,
+  longitude: hotspot.longitude,
+  latitude: hotspot.latitude,
+  googleApiCode: hotspot.googleApiCode,
+});
+const submitHotspot = async (hotspot) => {
+  const { $axios } = useNuxtApp(); // Use the Axios plugin
+  const requestBody = createHotspotRequestBody(hotspot);
+
+  try {
+    const response = await $axios.post("http://localhost:8080/hotspots", requestBody);
+    alert(`Hotspot submitted successfully: ${response.data.message}`);
+  } catch (error) {
+    console.error("Error submitting hotspot:", error);
+    alert("Failed to submit hotspot. Please try again.");
   }
 };
 </script>
