@@ -1,4 +1,13 @@
 <template>
+  <div class="dropdown-container">
+    <label for="hotspot-select">Filter by Hotspot:</label>
+    <select id="hotspot-select" v-model="selectedHotspot" @change="onDropdownChange">
+      <option value="all">All</option>
+      <option v-for="hotspot in hotspots" :key="hotspot.id" :value="hotspot.id">
+        {{ hotspot.name }}
+      </option>
+    </select>
+  </div>
   <h1>Locations</h1>
   <div>
     <div v-if="pending">Loading...</div>
@@ -32,7 +41,57 @@
   </div>
 </template>
 <script setup>
-const {data: locations, pending, error} = await useFetch('http://localhost:8080/locations')
+import { ref, onMounted } from "vue";
+import { useNuxtApp } from "#app";
+
+// Data references
+const results = ref([]);
+const hotspots = ref([]);
+const locations = ref([]);
+const selectedHotspot = ref("all"); // Default to "All"
+
+// Fetch hotspots for the dropdown
+const fetchHotspots = async () => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.get("http://localhost:8080/hotspots");
+    hotspots.value = response.data; // Adjust this based on your response structure
+  } catch (error) {
+    console.error("Error fetching hotspots:", error);
+    alert("Failed to fetch hotspots.");
+  }
+};
+
+// Event handler for dropdown change
+const onDropdownChange = async() => {
+  console.log("Selected hotspot ID:", selectedHotspot.value);
+  if (selectedHotspot.value === "all") {
+    console.log("All hotspots selected. Fetching all locations...");
+    try {
+      const { $axios } = useNuxtApp();
+      const response = await $axios.get("http://localhost:8080/locations");
+      locations.value = response.data; // Populate the table with the response data
+      console.log("Locations fetched successfully:", results.value);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      alert("Failed to fetch locations.");
+    }
+  } else {
+    try {
+      const { $axios } = useNuxtApp();
+      const response = await $axios.get(`http://localhost:8080/locations/hotspot/${selectedHotspot.value}`);
+      locations.value = response.data; // Populate the table with the filtered results
+      console.log("Filtered locations fetched successfully:", results.value);
+    } catch (error) {
+      console.error(`Error fetching locations for hotspot ID ${selectedHotspot.value}:`, error);
+      alert(`Failed to fetch locations for hotspot ID ${selectedHotspot.value}.`);
+    }
+  }
+};
+
+onMounted(() => {
+  fetchHotspots();
+});
 </script>
 <style scoped>
 h1 {
