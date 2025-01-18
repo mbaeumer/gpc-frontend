@@ -7,7 +7,15 @@
         {{ hotspot.name }}
       </option>
     </select>
+    <button
+        @click="syncLocations"
+        :disabled="selectedHotspot === 'all'"
+        class="sync-button"
+    >
+      Sync Locations
+    </button>
   </div>
+
   <h1>Locations</h1>
   <div>
     <div v-if="pending">Loading...</div>
@@ -86,6 +94,45 @@ const onDropdownChange = async() => {
       console.error(`Error fetching locations for hotspot ID ${selectedHotspot.value}:`, error);
       alert(`Failed to fetch locations for hotspot ID ${selectedHotspot.value}.`);
     }
+  }
+};
+
+const syncLocations = async () => {
+  console.log("Syncing locations for hotspot ID:", selectedHotspot.value);
+  try {
+    const { $axios } = useNuxtApp();
+    //pending.value = true;
+
+    // Find the selected hotspot's details
+    const selectedHotspotDetails = hotspots.value.find(
+        (hotspot) => hotspot.id === selectedHotspot.value
+    );
+    console.log("details: " + selectedHotspotDetails)
+
+    if (!selectedHotspotDetails) {
+      console.error("Hotspot details not found.");
+      alert("Failed to sync locations: Hotspot details not found.");
+      return;
+    }
+
+    // Prepare the payload
+    const payload = {
+      id: selectedHotspot.value,
+      longitude: selectedHotspotDetails.longitude,
+      latitude: selectedHotspotDetails.latitude,
+    };
+
+    console.log("payload: " + payload)
+
+    // Make the POST request
+    const response = await $axios.post("http://localhost:8080/locations/sync", payload);
+    console.log("Sync successful:", response.data);
+    locations.value = response.data
+  } catch (err) {
+    console.error("Error syncing locations:", err);
+    alert("Failed to sync locations.");
+  } finally {
+    //pending.value = false;
   }
 };
 
