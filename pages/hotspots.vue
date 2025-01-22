@@ -29,7 +29,8 @@
   </div>
 </template>
 <script setup>
-const {data: hotspots, pending, error} = await useFetch('http://localhost:8080/hotspots')
+const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+const {data: hotspots, pending, error} = await useFetch(`${baseUrl}/hotspots`)
 </script>
 <style scoped>
 h1 {

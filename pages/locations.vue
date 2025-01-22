@@ -61,8 +61,10 @@ const selectedHotspot = ref("all"); // Default to "All"
 // Fetch hotspots for the dropdown
 const fetchHotspots = async () => {
   const { $axios } = useNuxtApp();
+  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+
   try {
-    const response = await $axios.get("http://localhost:8080/hotspots");
+    const response = await $axios.get(`${baseUrl}/hotspots`);
     hotspots.value = response.data; // Adjust this based on your response structure
   } catch (error) {
     console.error("Error fetching hotspots:", error);
@@ -73,11 +75,12 @@ const fetchHotspots = async () => {
 // Event handler for dropdown change
 const onDropdownChange = async() => {
   console.log("Selected hotspot ID:", selectedHotspot.value);
+  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
   if (selectedHotspot.value === "all") {
     console.log("All hotspots selected. Fetching all locations...");
     try {
       const { $axios } = useNuxtApp();
-      const response = await $axios.get("http://localhost:8080/locations");
+      const response = await $axios.get(`${baseUrl}/locations`);
       locations.value = response.data; // Populate the table with the response data
       console.log("Locations fetched successfully:", results.value);
     } catch (error) {
@@ -87,7 +90,8 @@ const onDropdownChange = async() => {
   } else {
     try {
       const { $axios } = useNuxtApp();
-      const response = await $axios.get(`http://localhost:8080/locations/hotspot/${selectedHotspot.value}`);
+
+      const response = await $axios.get(`${baseUrl}/locations/hotspot/${selectedHotspot.value}`);
       locations.value = response.data; // Populate the table with the filtered results
       console.log("Filtered locations fetched successfully:", results.value);
     } catch (error) {
@@ -125,7 +129,8 @@ const syncLocations = async () => {
     console.log("payload: " + payload)
 
     // Make the POST request
-    const response = await $axios.post("http://localhost:8080/locations/sync", payload);
+    const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+    const response = await $axios.post(`${baseUrl}/locations/sync`, payload);
     console.log("Sync successful:", response.data);
     locations.value = response.data
   } catch (err) {

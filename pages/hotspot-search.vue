@@ -56,7 +56,8 @@ const performSearch = async () => {
 
   try {
     const { $axios } = useNuxtApp();
-    const response = await $axios.get(`http://localhost:8080/hotspots/search`, {
+    const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+    const response = await $axios.get(`${baseUrl}/hotspots/search`, {
       params: { query: searchQuery.value },
     });
     results.value = response.data; // Adjust based on the response structure
@@ -79,9 +80,11 @@ const createHotspotRequestBody = (hotspot) => ({
 const submitHotspot = async (hotspot) => {
   const { $axios } = useNuxtApp(); // Use the Axios plugin
   const requestBody = createHotspotRequestBody(hotspot);
+  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+
 
   try {
-    const response = await $axios.post("http://localhost:8080/hotspots", requestBody);
+    const response = await $axios.post(`${baseUrl}/hotspots`, requestBody);
     alert(`Hotspot submitted successfully: ${response.data.message}`);
   } catch (error) {
     console.error("Error submitting hotspot:", error);

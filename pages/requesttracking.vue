@@ -27,7 +27,8 @@
   </div>
 </template>
 <script setup>
-const {data: trackings, pending, error} = await useFetch('http://localhost:8080/requesttracking')
+const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+const {data: trackings, pending, error} = await useFetch(`${baseUrl}/requesttracking`)
 </script>
 <style scoped>
 h1 {
