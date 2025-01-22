@@ -23,11 +23,11 @@ jobs:
 
       # Install dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       # Build the app
       - name: Build Nuxt App
-        run: npm run build
+        run: npm run build --no-cache
 
       - name: List the contents of .output
         run: ls -R ./.output
