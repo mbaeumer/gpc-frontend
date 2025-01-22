@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/axios.js'],
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:8080', // Fallback to localhost if not defined
+      backendUrl: process.env.BACKEND_URL || 'http://localhost:8080',
+      //apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:8080', // Fallback to localhost if not defined
     },
   }
 })
