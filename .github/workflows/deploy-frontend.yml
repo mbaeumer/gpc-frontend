@@ -29,6 +29,9 @@ jobs:
       - name: Build Nuxt App
         run: npm run build
 
+      - name: List the contents of .output
+        run: ls -R ./.output
+
       # Deploy to Azure App Service
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
