@@ -56,7 +56,7 @@ const performSearch = async () => {
 
   try {
     const { $axios } = useNuxtApp();
-    const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+    const baseUrl = useRuntimeConfig().public.backendUrl;
     const response = await $axios.get(`${baseUrl}/hotspots/search`, {
       params: { query: searchQuery.value },
     });
@@ -80,7 +80,7 @@ const createHotspotRequestBody = (hotspot) => ({
 const submitHotspot = async (hotspot) => {
   const { $axios } = useNuxtApp(); // Use the Axios plugin
   const requestBody = createHotspotRequestBody(hotspot);
-  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+  const baseUrl = useRuntimeConfig().public.backendUrl;
 
 
   try {

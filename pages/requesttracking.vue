@@ -27,7 +27,7 @@
   </div>
 </template>
 <script setup>
-const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+const baseUrl = useRuntimeConfig().public.backendUrl;
 const {data: trackings, pending, error} = await useFetch(`${baseUrl}/requesttracking`)
 </script>
 <style scoped>

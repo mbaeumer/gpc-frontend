@@ -61,7 +61,7 @@ const selectedHotspot = ref("all"); // Default to "All"
 // Fetch hotspots for the dropdown
 const fetchHotspots = async () => {
   const { $axios } = useNuxtApp();
-  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+  const baseUrl = useRuntimeConfig().public.backendUrl;
 
   try {
     const response = await $axios.get(`${baseUrl}/hotspots`);
@@ -75,7 +75,7 @@ const fetchHotspots = async () => {
 // Event handler for dropdown change
 const onDropdownChange = async() => {
   console.log("Selected hotspot ID:", selectedHotspot.value);
-  const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+  const baseUrl = useRuntimeConfig().public.bsackendUrl;
   if (selectedHotspot.value === "all") {
     console.log("All hotspots selected. Fetching all locations...");
     try {
@@ -129,7 +129,7 @@ const syncLocations = async () => {
     console.log("payload: " + payload)
 
     // Make the POST request
-    const baseUrl = useRuntimeConfig().public.apiBaseUrl;
+    const baseUrl = useRuntimeConfig().public.bsackendUrl;
     const response = await $axios.post(`${baseUrl}/locations/sync`, payload);
     console.log("Sync successful:", response.data);
     locations.value = response.data
