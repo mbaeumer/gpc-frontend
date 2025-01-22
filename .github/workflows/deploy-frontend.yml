@@ -3,7 +3,7 @@ name: Deploy Nuxt3 Frontend to Azure App Service
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
