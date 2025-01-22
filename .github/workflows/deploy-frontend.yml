@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Ensure this matches the Node.js version used in your Nuxt app
+          node-version: '20' # Ensure this matches the Node.js version used in your Nuxt app
           cache: 'npm'
 
       # Install dependencies
