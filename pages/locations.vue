@@ -75,12 +75,13 @@ const fetchHotspots = async () => {
 // Event handler for dropdown change
 const onDropdownChange = async() => {
   console.log("Selected hotspot ID:", selectedHotspot.value);
-  const baseUrl = useRuntimeConfig().public.bsackendUrl;
+  const {backendUrl} = useRuntimeConfig().public;
+  console.log(backendUrl)
   if (selectedHotspot.value === "all") {
     console.log("All hotspots selected. Fetching all locations...");
     try {
       const { $axios } = useNuxtApp();
-      const response = await $axios.get(`${baseUrl}/locations`);
+      const response = await $axios.get(`${backendUrl}/locations`);
       locations.value = response.data; // Populate the table with the response data
       console.log("Locations fetched successfully:", results.value);
     } catch (error) {
@@ -91,7 +92,7 @@ const onDropdownChange = async() => {
     try {
       const { $axios } = useNuxtApp();
 
-      const response = await $axios.get(`${baseUrl}/locations/hotspot/${selectedHotspot.value}`);
+      const response = await $axios.get(`${backendUrl}/locations/hotspot/${selectedHotspot.value}`);
       locations.value = response.data; // Populate the table with the filtered results
       console.log("Filtered locations fetched successfully:", results.value);
     } catch (error) {
@@ -129,8 +130,9 @@ const syncLocations = async () => {
     console.log("payload: " + payload)
 
     // Make the POST request
-    const baseUrl = useRuntimeConfig().public.bsackendUrl;
-    const response = await $axios.post(`${baseUrl}/locations/sync`, payload);
+    const {backendUrl} = useRuntimeConfig().public;
+    console.log(backendUrl)
+    const response = await $axios.post(`${backendUrl}/locations/sync`, payload);
     console.log("Sync successful:", response.data);
     locations.value = response.data
   } catch (err) {
