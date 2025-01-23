@@ -58,4 +58,4 @@ jobs:
           app-name: 'azure-hello-world-fe'
           slot-name: 'Production'
           package: ./.output
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B0C8B842DA0A458D991FD638F69DAC96}}
