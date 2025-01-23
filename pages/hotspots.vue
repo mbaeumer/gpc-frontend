@@ -29,8 +29,9 @@
   </div>
 </template>
 <script setup>
-const baseUrl = useRuntimeConfig().public.backendUrl;
-const {data: hotspots, pending, error} = await useFetch(`${baseUrl}/hotspots`)
+const {backendUrl} = useRuntimeConfig().public;
+console.log(backendUrl)
+const {data: hotspots, pending, error} = await useFetch(`${backendUrl}/hotspots`)
 </script>
 <style scoped>
 h1 {

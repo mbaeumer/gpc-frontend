@@ -80,11 +80,11 @@ const createHotspotRequestBody = (hotspot) => ({
 const submitHotspot = async (hotspot) => {
   const { $axios } = useNuxtApp(); // Use the Axios plugin
   const requestBody = createHotspotRequestBody(hotspot);
-  const baseUrl = useRuntimeConfig().public.backendUrl;
-
+  const {backendUrl} = useRuntimeConfig().public;
+  console.log(backendUrl)
 
   try {
-    const response = await $axios.post(`${baseUrl}/hotspots`, requestBody);
+    const response = await $axios.post(`${backendUrl}/hotspots`, requestBody);
     alert(`Hotspot submitted successfully: ${response.data.message}`);
   } catch (error) {
     console.error("Error submitting hotspot:", error);
