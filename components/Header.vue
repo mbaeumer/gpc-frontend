@@ -5,7 +5,6 @@
         <li><NuxtLink to="/hotspots">Hotspots</NuxtLink></li>
         <li><NuxtLink to="/locations">Locations</NuxtLink></li>
         <li><NuxtLink to="/requesttracking">Requests</NuxtLink></li>
-        <li><NuxtLink to="/about">About</NuxtLink></li>
       </ul>
     </nav>
   </header>
