@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/axios.js'],
   runtimeConfig: {
     public: {
-      backendUrl: process.env.BACKEND_URL || 'http://accessible-places-be-gca7bdgphcgcbzaf.germanywestcentral-01.azurewebsites.net',//'http://localhost:8080',
+      backendUrl: process.env.BACKEND_URL || 'https://accessible-places-be-gca7bdgphcgcbzaf.germanywestcentral-01.azurewebsites.net',//'http://localhost:8080',
       //apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:8080', // Fallback to localhost if not defined
     },
   }
