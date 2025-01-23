@@ -55,7 +55,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'azure-hello-world-fe'
+          app-name: 'accessible-places'
           slot-name: 'Production'
           package: ./.output
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B0C8B842DA0A458D991FD638F69DAC96}}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
