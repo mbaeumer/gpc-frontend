@@ -85,7 +85,6 @@ const submitHotspot = async (hotspot) => {
 
   try {
     const response = await $axios.post(`${backendUrl}/hotspots`, requestBody);
-    alert(`Hotspot submitted successfully: ${response.data.message}`);
   } catch (error) {
     console.error("Error submitting hotspot:", error);
     alert("Failed to submit hotspot. Please try again.");
