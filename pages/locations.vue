@@ -42,6 +42,11 @@
           <td>{{ location.accessibleSeating }}</td>
           <td>{{ location.formattedAddress }}</td>
           <td>{{ location.googleApiCode }}</td>
+          <td>
+            <button @click="sendLocationData(location)" class="action-button">
+              Send
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -140,6 +145,35 @@ const syncLocations = async () => {
     alert("Failed to sync locations.");
   } finally {
     //pending.value = false;
+  }
+};
+
+// Send location data to the backend
+const sendLocationData = async (location) => {
+  const { $axios } = useNuxtApp();
+  const { backendUrl } = useRuntimeConfig().public;
+
+  if (selectedHotspot.value === "all") {
+    alert("Please select a specific hotspot to send data.");
+    return;
+  }
+
+  const payload = {
+    hotspotId: selectedHotspot.value,
+    name: location.name,
+    accessibleEntrance: location.accessibleEntrance,
+    accessibleRestRoom: location.accessibleRestRoom,
+    accessibleSeating: location.accessibleSeating,
+    formattedAddress: location.formattedAddress,
+    googleApiCode: location.googleApiCode,
+  };
+
+  try {
+    const response = await $axios.post(`${backendUrl}/locations`, payload);
+    console.log("Location data sent successfully:", response.data);
+  } catch (err) {
+    console.error("Error sending location data:", err);
+    alert("Failed to send location data.");
   }
 };
 
